@@ -21,7 +21,12 @@ The Identifiers could also be loaded up into a tree structure for even faster lo
 
 Without the need to serialize/deserialize to a string for SQLite as well, you could also bytepack your objects in the file to save disk space.
 
-## CONCURRENCT
+## CONCURRENCY
 
 This code is not Concurrent Safe, as the collection owns the item, you must do your work on it and save it. This allows the is_dirty flag to work.
 To make this concurrent save, the getters would have to pull the item and return a copy which you own, that you can later put back in, probably with a flag to re-cache or go straight to disk.
+Currently the collection owns and delets all items, so using this code concurrently can lead to access violations.
+
+## NOTE
+
+I did not test this on Windows, but it should work with cygwin gcc/g++ and not much tweaking otherwise ;-)
